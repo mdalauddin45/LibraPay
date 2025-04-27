@@ -9,6 +9,7 @@ urlpatterns = [
     path('', HomeView.as_view(), name='home'),
     path('home/<slug:category_slug>/', HomeView.as_view(), name='category_wise_post'),
     path('accounts/', include('accounts.urls')),
+    path('transactions/', include('transactions.urls')),
     path('books/', include('book.urls')),
 ]
 urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
