@@ -24,12 +24,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+# SECRET_KEY = env("SECRET_KEY")
 SECRET_KEY = 'django-insecure-88-kn&%l)l##za!0xm9qnwq@^1n@%bb-$@^g%(yeoq6h)e(me_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+ALLOWED_HOSTS = ["*"]
+CSRF_TRUSTED_ORIGINS = ['https://library-management-yv5a.onrender.com','https://*.127.0.0.1']
 
-ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -48,7 +50,7 @@ INSTALLED_APPS = [
     'book',
     'category',
 ]
-
+LOGIN_URL = '/accounts/login/'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -90,7 +92,12 @@ DATABASES = {
     }
 }
 
-
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         # Feel free to alter this value to suit your needs.
+#         default='postgres://library_management_k0qj_user:VPVswQ7EX6Y5rssS5EJgAbSAayQKOt0q@dpg-cm7ig6fqd2ns73f449q0-a.oregon-postgres.render.com/library_management_k0qj',
+#     )
+# }
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -138,9 +145,10 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_USE_TLS = True
-# EMAIL_PORT = 587
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
 # EMAIL_HOST_USER = env("EMAIL")
-# EMAIL_HOST_PASSWORD = env("EMAIL_PASSWORD")
+EMAIL_HOST_USER = 'mdalauddin8948@gmail.com'
+EMAIL_HOST_PASSWORD = 'kcmtjvjpfeigahlw'

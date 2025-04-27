@@ -9,7 +9,7 @@ from django.contrib import messages
 from book.models import Bookpurchase
 from django.views import View
 from .forms import ReviewForm
-# from transactions.views import send_transaction_email
+from transactions.views import send_transaction_email
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 
@@ -60,7 +60,7 @@ class PurchaseView(View):
             request.user.account.save()
 
             messages.success(request, "Purchase successful. Balance deducted.")
-        # send_transaction_email(self.request.user,book.price,"Purchase Message", 'transactions/purchase_email.html' )
+        send_transaction_email(self.request.user,book.price,"Purchase Message", 'transactions/purchase_email.html' )
         return redirect('profile')
 
 @method_decorator(login_required, name='dispatch')
@@ -80,7 +80,7 @@ class ReturnView(DeleteView):
             self.request,
             f'{"{:,.2f}".format(float(amount))}$ was Return to your account successfully'
         )
-        # send_transaction_email(self.request.user,amount,"Return Message", 'transactions/return_email.html' )
+        send_transaction_email(self.request.user,amount,"Return Message", 'transactions/return_email.html' )
         return super().form_valid(form)
 
     def delete(self, request, *args, **kwargs):
