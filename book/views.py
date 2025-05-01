@@ -12,6 +12,7 @@ from .forms import ReviewForm
 from transactions.views import send_transaction_email
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
+from decimal import Decimal
 
 # Create your views here.
 
@@ -69,21 +70,28 @@ class ReturnView(DeleteView):
     success_url = reverse_lazy('profile')
     template_name = 'accounts/return_confirmation.html'
 
-    def form_valid(self, form):
+    def post(self, request, *args, **kwargs):
         purchase = self.get_object()
-        amount = purchase.book.price 
+        # Convert the price to Decimal to ensure consistent types
+        amount = round(purchase.book.price * Decimal('0.9'), 2)
         account = purchase.user.account
         account.balance += amount
         account.save(update_fields=['balance'])
-        
-        messages.success(
-            self.request,
-            f'{"{:,.2f}".format(float(amount))}$ was Return to your account successfully'
-        )
-        send_transaction_email(self.request.user,amount,"Return Message", 'transactions/return_email.html' )
-        return super().form_valid(form)
 
-    def delete(self, request, *args, **kwargs):
-        return super().delete(request, *args, **kwargs)
+        messages.success(
+            request,
+            f'{amount:,.2f}$ was returned to your account successfully.'
+        )
+
+        send_transaction_email(
+            request.user,
+            amount,
+            "Return Message",
+            'transactions/return_email.html'
+        )
+
+        # Now delete the purchase record
+        return super().post(request, *args, **kwargs)
+
 
            

@@ -1,4 +1,136 @@
-<p>Hello {{user.first_name}} {{user.last_name}}</p>
-<p>Your Return book successfuly and also you ${{amount}} has been added on your account successfuly completed. After Return your total amount is {{user.account.balance}} </p>
-<p>Thank for Library Management with us</p>
-<p>LibraPay</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Return Confirmation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            margin: 0;
+            padding: 0;
+            color: #1f2937;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+        }
+        .header {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .logo {
+            /* Placeholder for your logo.  You'll need to replace this with a real URL or inline SVG. */
+            /* width: 150px;  Adjust as needed */
+            /* height: auto; */
+             margin: 0 auto 20px; /* Center the logo */
+            /* background-image: url('URL_TO_YOUR_LOGO'); */
+            /* background-size: contain; */
+            /* background-repeat: no-repeat; */
+             display: block; /*fixes alignment*/
+             text-align: center;
+             font-size: 24px; /* Example */
+             font-weight: bold;
+             color: #4f46e5;
+        }
+        .title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 20px;
+        }
+        .greeting {
+            font-size: 18px;
+            color: #374151;
+            margin-bottom: 10px;
+        }
+        .message {
+            font-size: 16px;
+            line-height: 1.5;
+            color: #4b5563;
+            margin-bottom: 20px;
+        }
+        .amount {
+            font-size: 20px;
+            font-weight: 700;
+            color: #10b981;
+            margin-bottom: 20px;
+            text-align: center; /* Center the amount */
+        }
+        .disclaimer {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 20px;
+        }
+        .footer {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+            color: #9ca3af;
+            font-size: 12px;
+        }
+        .footer a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        .social {
+            margin-top: 10px;
+            text-align: center;
+        }
+        .social a {
+            display: inline-block;
+            margin: 0 10px;
+            color: #4f46e5; /* example color */
+            text-decoration: none;
+            font-size: 18px; /* Example size */
+        }
+        .social a:hover {
+            color: #6366f1; /* Example hover color */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                LibraPay  </div>
+            <h1 class="title">Book Return Confirmation</h1>
+        </div>
+        <p class="greeting">Dear {{ user.first_name }},</p>
+        <p class="message">
+            We have processed your book return. The refunded amount has been credited to your account.
+        </p>
+        <p class="amount">
+            Amount Returned: ${{ amount }}
+        </p>
+        <p class="disclaimer">
+            If you have any questions about this return, please contact our support team.
+        </p>
+        <div class="footer">
+            <p>Thank you for using LibraPay!</p>
+            <p>
+                <a href="https://yourwebsite.com">Visit Our Website</a> |
+                Phone: +8801845959145 |
+                Address: BGCTUB, Chandanish, Chattogram, BD
+            </p>
+            <div class="social">
+                <a href="#"><i class="fab fa-facebook-square"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+    </div>
+    <script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script>
+</body>
+</html>
