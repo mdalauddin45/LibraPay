@@ -1,31 +1,65 @@
-<nav class="flex items-center justify-between flex-wrap bg-white p-6 px-10">
+<nav class="flex items-center justify-between flex-wrap bg-gradient-to-r from-blue-900 to-purple-900 p-6">
     <div class="flex items-center flex-shrink-0 text-white mr-6">
-        <span class="font-semibold text-xl tracking-tight text-blue-900"><a href="/">Library Management</a></span>
+        <span class="font-semibold text-2xl tracking-tight">
+            <a href="/" class="text-white hover:text-blue-200 transition duration-300 flex items-center">
+                <span class="font-['Libre_Baskerville'] text-3xl mr-2">Libra</span>
+                <span id="pay-logo" class="text-3xl font-bold text-yellow-400 transition duration-500">Pay</span>
+            </a>
+        </span>
     </div>
     <div class="block lg:hidden">
-        
+        <button id="mobile-menu-button" class="flex items-center px-3 py-2 border rounded text-blue-200 border-blue-400 hover:text-white hover:border-white">
+            <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
+        </button>
     </div>
-    <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto px-10">
+    <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
         {% if request.user.is_authenticated %}
             <div class="text-md lg:flex-grow">
-                <a href="{% url 'deposit' %}" class="block mt-4 lg:inline-block lg:mt-0 text-blue-900 hover:text-blue-700-900 hover:font-black mr-4">
+                <a href="{% url 'deposit' %}" class="block mt-4 lg:inline-block lg:mt-0 text-blue-200 hover:text-white mr-4 transition duration-300 hover:font-semibold">
                     Deposit
                 </a>
+                
             </div>
-            <div class="flex w-auto">
-                <div class="text-blue-900 my-auto font-black px-5">Welcome, {{ request.user.first_name }} (balance : {{request.user.account.balance}}) </div>
-
-                <a href="{% url 'profile' %}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 mx-2 px-4 rounded focus:outline-none focus:shadow-outline">Profile</a>
-                <a href="{% url 'logout' %}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded focus:outline-none focus:shadow-outline">Logout</a>
+            <div class="flex w-auto items-center">
+                <span class="text-gray-200 hidden lg:inline">
+                    Welcome, <span class="font-semibold text-white">{{ request.user.first_name }}</span> 
+                    (<span class="font-mono text-yellow-300">Balance: {{ request.user.account.balance }}</span>)
+                </span>
+                <a href="{% url 'profile' %}" class="bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-500 hover:to-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300 ml-4">
+                    Profile
+                </a>
+                <a href="{% url 'logout' %}" class="bg-gradient-to-r from-red-400 to-orange-500 hover:from-red-500 hover:to-orange-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300 ml-4">
+                    Logout
+                </a>
             </div>
         {% else %}
-            <div class="text-md lg:flex-grow"></div>
-            <div>
-                <a href="{% url 'login' %}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 mx-2 px-4 rounded focus:outline-none focus:shadow-outline">Login</a>
+            <div class="text-md lg:flex-grow">
             </div>
-            <div>
-                <a href="{% url 'register' %}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded focus:outline-none focus:shadow-outline">Register</a>
+            <div class="flex justify-end">
+                <a href="{% url 'login' %}" class="bg-transparent hover:bg-blue-500 text-blue-200 font-semibold hover:text-white py-2 px-4 border border-blue-400 hover:border-transparent rounded transition duration-300 mr-2">
+                    Login
+                </a>
+                <a href="{% url 'register' %}" class="bg-gradient-to-r from-purple-400 to-pink-500 hover:from-purple-500 hover:to-pink-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300">
+                    Register
+                </a>
             </div>
         {% endif %}
     </div>
 </nav>
+
+<script>
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const navLinks = document.querySelector('.lg\\:flex'); // Select the nav links container
+    const payLogo = document.getElementById('pay-logo');
+
+    if (mobileMenuButton && navLinks) { // Check if elements exist
+        mobileMenuButton.addEventListener('click', () => {
+            navLinks.classList.toggle('hidden'); // Toggle the 'hidden' class
+            navLinks.classList.toggle('lg:flex'); // Ensure it's flex on large screens
+        });
+    }
+
+    if (payLogo) {
+        payLogo.classList.add('animate-pulse'); // Add the pulse class to the logo
+    }
+</script>
