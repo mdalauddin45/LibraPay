@@ -22,12 +22,10 @@
       <p class="text-gray-600 mb-4 leading-relaxed">{{ book.description }}</p>
       <div class="flex flex-col gap-2 text-gray-700 mb-6">
         <p>
-          <span class="font-semibold text-gray-800">Category:</span> {{
-          book.category }}
+          <span class="font-semibold text-gray-800">Category:</span> {{book.category }}
         </p>
         <p>
-          <span class="font-semibold text-gray-800">Price:</span> ${{ book.price
-          }}
+          <span class="font-semibold text-gray-800">Price:</span> ${{ book.price}}
         </p>
       </div>
 
@@ -82,6 +80,8 @@
           id="name"
           class="mt-1 w-full border border-gray-300 rounded-lg shadow-sm p-3 focus:ring-blue-500 focus:border-blue-500"
           placeholder="Your name"
+           value="{{ user.get_full_name|default:user.username }}"
+        {% if user.is_authenticated %} readonly {% endif %}
         />
       </div>
 
@@ -93,6 +93,8 @@
           type="email"
           name="email"
           id="email"
+           value="{{ user.email }}"
+        {% if user.is_authenticated %} readonly {% endif %}
           class="mt-1 w-full border border-gray-300 rounded-lg shadow-sm p-3 focus:ring-blue-500 focus:border-blue-500"
           placeholder="Your email"
         />
