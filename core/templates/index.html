@@ -186,23 +186,25 @@
         }
     }
 </style>
+
 <div class="banner-container">
-    <div class="banner-slide active" style="background-image: url('https://images.unsplash.com/photo-1507842217276-18c3150561ad?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
+    <div class="banner-slide" style="background-image: url('{% static 'img/slider-111.jpg' %}');">
         <h2>Welcome to LibraPay</h2>
         <p>Discover a vast collection of books and manage your library efficiently.</p>
         <a href="{% url 'home' %}">Explore Our Collection</a>
     </div>
-    <div class="banner-slide" style="background-image: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
+    <div class="banner-slide active" style="background-image: url('{% static 'img/slider-222.jpg' %}');">
         <h2>Manage Your Library</h2>
         <p>LibraPay helps you keep track of your books, users, and transactions with ease.</p>
         <a href="{% url 'home' %}">Learn More</a>
     </div>
-    <div class="banner-slide" style="background-image: url('https://images.unsplash.com/photo-1532012174062-4f542777949d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
+    <div class="banner-slide" style="background-image: url('{% static 'img/slider-333.jpg' %}');">
         <h2>Easy Transactions</h2>
         <p>Securely manage deposits and other financial transactions within your library system.</p>
         <a href="{% url 'deposit' %}">Manage Transactions</a>
     </div>
 </div>
+
 
 <div class="category-list">
     {% for category in categories %}
@@ -210,22 +212,25 @@
     {% endfor %}
 </div>
 
-<div class="container mx-auto my-8 pb-16" >
+<div class="container mx-auto my-8 pb-16">
     <h2 class="text-2xl font-bold mb-4 ml-4">Featured Books</h2>
-    <div class="book-grid">
+    <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 px-4">
         {% for book in books %}
-            <div class="book-card">
-                <img src="{{ book.image.url }}" alt="{{ book.title }}">
-                <div class="book-card-content">
-                    <h2 class="book-card-title">{{ book.title|truncatewords:3 }}</h2>
-                    <p class="book-card-price">Price: ${{ book.price }}</p>
-                    <p class="book-card-category">Category: {{ book.category }}</p>
-                    <a href="{% url 'details_post' book.id %}" class="book-card-link">Read More</a>
+            <div class="relative bg-white rounded-lg shadow-md overflow-hidden transform transition duration-300 hover:scale-105">
+                <img class="w-full h-48 object-cover" src="{{ book.image.url }}" alt="{{ book.title }}">
+                <div class="p-4">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">{{ book.title|truncatewords:3 }}</h3>
+                    <p class="text-sm text-red-500 font-semibold mb-1">Price: ${{ book.price }}</p>
+                    <p class="text-sm text-blue-500 mb-4">Category: {{ book.category }}</p>
+                    <a href="{% url 'details_post' book.id %}" class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+                        View Details
+                    </a>
                 </div>
             </div>
         {% endfor %}
     </div>
 </div>
+
 <script>
     // JavaScript for the animated banner
     let slideIndex = 0;

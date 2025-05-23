@@ -1,71 +1,126 @@
-{% extends "base.html" %} 
-{% block content %} 
-<div class="flex bg-white mt-5 rounded-md m-2">
-  <div class="w-1/2 flex justify-center items-center py-5">
-    <img src="{{ book.image.url }}" class="max-w-full" style="max-width: 400px;" alt="Book Image">
-  </div>
-  <div class="w-1/2 p-4">
-    <div class="bg-white p-6">
-      <h5 class="text-2xl font-bold mb-4">
-        <a href="#" class="text-blue-500 ">{{ book.title }}</a>
-      </h5>
-      <p class="text-gray-600 mb-2">Description: {{ book.description }}</p>
-      <p class="text-gray-600 mb-2">Category Name: {{ book.category }}</p>
-      <p class="text-gray-600 mb-2">Price: {{ book.price }} $</p>
+{% extends "base.html" %} {% block content %}
+
+<div class="max-w-6xl mx-auto px-4 py-10">
+  <!-- Book Detail Section -->
+  <div
+    class="flex flex-col lg:flex-row bg-white/30 backdrop-blur-md shadow-lg rounded-xl overflow-hidden border border-gray-200"
+  >
+    <!-- Book Image -->
+    <div
+      class="lg:w-1/2 flex items-center justify-center bg-gradient-to-br from-blue-50 to-white p-6"
+    >
+      <img
+        src="{{ book.image.url }}"
+        class="rounded-lg shadow-md max-h-[400px] object-contain"
+        alt="{{ book.title }}"
+      />
+    </div>
+
+    <!-- Book Info -->
+    <div class="lg:w-1/2 p-8">
+      <h2 class="text-3xl font-bold text-gray-800 mb-4">{{ book.title }}</h2>
+      <p class="text-gray-600 mb-4 leading-relaxed">{{ book.description }}</p>
+      <div class="flex flex-col gap-2 text-gray-700 mb-6">
+        <p>
+          <span class="font-semibold text-gray-800">Category:</span> {{
+          book.category }}
+        </p>
+        <p>
+          <span class="font-semibold text-gray-800">Price:</span> ${{ book.price
+          }}
+        </p>
+      </div>
+
       {% if user.is_authenticated %}
-      <a href="{% url 'purchase_book' book.id %}" class="flex items-center justify-center w-full p-3 font-semibold tracking bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-2 rounded">Borrow</a>
+      <a
+        href="{% url 'purchase_book' book.id %}"
+        class="flex items-center justify-center w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold py-2 rounded-xl shadow-md hover:shadow-lg hover:from-blue-600 hover:to-indigo-700 transition ease-in-out duration-300"
+      >
+        Borrow
+      </a>
+      {% else %}
+      <a
+        href="{% url 'login' %}?next={{ request.path }}"
+        class="flex items-center justify-center w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold py-2 rounded-xl shadow-md hover:shadow-lg hover:from-blue-600 hover:to-indigo-700 transition ease-in-out duration-300"
+      >
+        Borrow
+      </a>
       {% endif %}
     </div>
   </div>
-</div>
 
-
-
-{% if reviews %}
-<div class="card mt-4 m-2 bg-white rounded-md  px-10">
-  <h5 class="card-header py-5">Total Review: {{ reviews | length }}</h5>
-  <div class="card-body pb-2">
-    {% for c in reviews %}
-    <hr>
-      <div class="card mb-3 pb-2 pt-5">
-        <div class="card-body">
-          <div class="media">
-            <div class="media-body">
-              <h5 class="mt-0 text-lg font-bold">
-                  <span class="opacity-50">By</span> {{ c.name }}
-              </h5>            
-              <p>{{ c.body }}</p>
-              <p>{{ c.created_on }}</p>
-            </div>
-          </div>
-        </div>
+  <!-- Reviews Section -->
+  {% if reviews %}
+  <div class="mt-10 bg-white shadow rounded-lg p-6">
+    <h3 class="text-xl font-semibold mb-4 border-b pb-2">
+      Reviews ({{ reviews | length }})
+    </h3>
+    <div class="space-y-6">
+      {% for c in reviews %}
+      <div class="border-l-4 border-blue-500 pl-4 py-2 bg-blue-50 rounded">
+        <h4 class="text-md font-semibold text-blue-800">By {{ c.name }}</h4>
+        <p class="text-gray-700 mb-1">{{ c.body }}</p>
+        <span class="text-sm text-gray-500">{{ c.created_on }}</span>
       </div>
-    {% endfor %}
+      {% endfor %}
+    </div>
   </div>
-</div>
-{% endif %}
+  {% endif %}
 
-<div class="card mt-4 m-2 bg-white rounded-md p-5">
-  <div class="card-body">
-    <form method="POST" enctype="multipart/form-data">
-      <h1 class="mb-4 text-2xl font-bold">Add Review</h1>
+  <!-- Add Review Form -->
+  <div class="mt-10 bg-white shadow-lg rounded-lg p-6">
+    <h3 class="text-2xl font-bold mb-6">Add Your Review</h3>
+    <form method="POST" enctype="multipart/form-data" class="space-y-6">
       {% csrf_token %}
-      <div class="mb-4">
-        <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Name</label>
-        <input id="name" type="text" name="name" placeholder="Your name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+      <div>
+        <label for="name" class="block text-sm font-medium text-gray-700"
+          >Name</label
+        >
+        <input
+          type="text"
+          name="name"
+          id="name"
+          class="mt-1 w-full border border-gray-300 rounded-lg shadow-sm p-3 focus:ring-blue-500 focus:border-blue-500"
+          placeholder="Your name"
+        />
       </div>
-      <div class="mb-4">
-        <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email</label>
-        <input id="email" type="email" name="email" placeholder="Your email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+
+      <div>
+        <label for="email" class="block text-sm font-medium text-gray-700"
+          >Email</label
+        >
+        <input
+          type="email"
+          name="email"
+          id="email"
+          class="mt-1 w-full border border-gray-300 rounded-lg shadow-sm p-3 focus:ring-blue-500 focus:border-blue-500"
+          placeholder="Your email"
+        />
       </div>
-      <div class="mb-4">
-        <label for="body" class="block text-gray-700 text-sm font-bold mb-2">Body</label>
-        <textarea id="body" name="body" placeholder="Your review" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
+
+      <div>
+        <label for="body" class="block text-sm font-medium text-gray-700"
+          >Review</label
+        >
+        <textarea
+          name="body"
+          id="body"
+          rows="4"
+          class="mt-1 w-full border border-gray-300 rounded-lg shadow-sm p-3 focus:ring-blue-500 focus:border-blue-500"
+          placeholder="Write your review..."
+        ></textarea>
       </div>
+
       {% if user.is_authenticated %}
-      <button type="submit" class="flex items-center justify-center w-full p-3 font-semibold tracki bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-2 rounded">Submit</button>
+      <button
+        type="submit"
+        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg shadow transition"
+      >
+        Submit Review
+      </button>
       {% endif %}
     </form>
   </div>
 </div>
+
 {% endblock %}
