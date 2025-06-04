@@ -9,6 +9,7 @@ django-email
 django-environ
 EasyProcess
 entrypoint2
+gunicorn
 filelock
 MouseInfo
 mss
