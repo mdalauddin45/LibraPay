@@ -61,7 +61,7 @@ class PurchaseView(View):
             request.user.account.save()
 
             messages.success(request, "Purchase successful. Balance deducted.")
-        send_transaction_email(self.request.user,book.price,"Purchase Message", 'transactions/purchase_email.html' )
+            send_transaction_email(self.request.user,book.price,"Purchase Message", 'transactions/purchase_email.html' )
         return redirect('profile')
 
 @method_decorator(login_required, name='dispatch')
